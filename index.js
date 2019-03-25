@@ -5,51 +5,49 @@ function getToken() {
   return '';
 }
 
-function forkRepo() {
 
-  const repo = 'learn-co-curriculum/js-ajax-fetch-lab';
-  //use fetch to fork it!
-  fetch(`/api.github.com/repos/${repo}/`, {
-    method: 'post',
-    headers: {
-      Authorization: `token ${getToken()}`
+function getIssues() {
+  fetch(`https://api.github.com/repos/GilTorch/javascript-fetch-lab/issues`,{
+    headers:{
+      Authorization:`${getToken()}`
     }
-  })
-    .then(response => response.json())
-    .then(json => showResults(json))
+  }).then((response)=>response.json())
+  .then(showIssues)
 }
 
-function showResults(json) {
-  //use this function to display the results from forking via the API
-  document.getElementById('results').innerHTML = `<a href="${json.html_url}" target="_blank">${json.html_url}</a>`
+function showIssues(json) {
 }
 
 function createIssue() {
-  //use this function to create an issue based on the values input in index.html
-  const issueData = {
-    title: document.getElementById('title').value,
-    body: document.getElementById('body').value
+  const issueData={
+    title:document.getElementById("title").value,
+    body:document.getElementById("body").value
   }
-  const username = 'SamuelC28'
-  fetch(`https://api.github.com/repos/${username}/javascript-fetch-lab/issues`, {
-    method: 'post',
-    body: JSON.stringify(issueData),
-    headers: {
-      Authorization: `token ${getToken()}`
+  fetch(`https://api.github.com/repos/GilTorch/javascript-fetch-lab/issues`,{
+    method:"post",
+    body:JSON.stringify(issueData),
+    headers:{
+      Authorization:`${getToken()}`
     }
-  })
-  .then(response => response.json())
-  .then(json => getIssues())
+  }).then((response)=>response.json())
+  .then(showIssues)
 }
 
-function getIssues() {
-  //once an issue is submitted, fetch all open issues to see the issues you are creating
-  const username = 'SamuelC28'
-  fetch(`https://api.github.com/repos/${username}/javascript-fetch-lab/issues`, {
-    headers: {
-      Authorization: `token ${getToken()}`
+function forkRepo() {
+  const token=getToken();
+  const repo = 'learn-co-curriculum/javascript-fetch-lab'
+  //use fetch to fork it!
+  fetch(`https://api.github.com/repos/${repo}/forks`,{
+    method:'post',
+    headers:{
+      Authorization:`${token}`
     }
   })
-    .then(response => response.json())
-    .then(json => console.log(json))
+  .then((response)=>response.json())
+  .then(showResults);
+}
+
+function showResults(jsonResponse){
+  const resultDiv=document.querySelector("#results");
+  resultDiv.innerHTML=jsonResponse.html_url;
 }
