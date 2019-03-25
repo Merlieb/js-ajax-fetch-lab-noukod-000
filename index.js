@@ -7,7 +7,7 @@ function getToken() {
 
 
 function getIssues() {
-  fetch(`https://api.github.com/repos/GilTorch/javascript-fetch-lab/issues`,{
+  fetch(`https://api.github.com/repos/Merlieb/javascript-fetch-lab/issues`,{
     headers:{
       Authorization:`${getToken()}`
     }
@@ -23,7 +23,7 @@ function createIssue() {
     title:document.getElementById("title").value,
     body:document.getElementById("body").value
   }
-  fetch(`https://api.github.com/repos/GilTorch/javascript-fetch-lab/issues`,{
+  fetch(`https://api.github.com/repos/Merlieb/javascript-fetch-lab/issues`,{
     method:"post",
     body:JSON.stringify(issueData),
     headers:{
